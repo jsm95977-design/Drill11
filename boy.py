@@ -77,16 +77,20 @@ class AutoRun:
         self.boy = boy
 
     def enter(self):
-        pass
+        self.boy.frame = 0
 
     def exit(self):
         pass
 
     def do(self):
-        pass
+        self.boy.frame = (self.boy.frame + 1) % 8
 
     def draw(self):
-        pass
+        # 이동 방향은 boy.dir(키 입력 상태)이 아니라 face_dir 로 관리한다
+        if self.boy.face_dir == 1:
+            self.boy.image.clip_draw(self.boy.frame * 100, 100, 100, 100, self.boy.x, self.boy.y)
+        else:
+            self.boy.image.clip_draw(self.boy.frame * 100, 0, 100, 100, self.boy.x, self.boy.y)
 
 
 class Boy:
