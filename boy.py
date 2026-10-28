@@ -86,20 +86,21 @@ class AutoRun:
         self.boy.frame = (self.boy.frame + 1) % 8
         self.boy.x += self.boy.face_dir * 15   # RUN(5) 보다 3배 빠르게, 키 입력 없이 이동
 
-        # 화면 끝에 닿으면 경계 안으로 되돌리고 방향을 뒤집는다
-        if self.boy.x >= 800 - 25:
-            self.boy.x = 800 - 25
+        # 화면 끝에 닿으면 경계 안으로 되돌리고 방향을 뒤집는다 (확대된 폭 150 의 절반 75 기준)
+        if self.boy.x >= 800 - 75:
+            self.boy.x = 800 - 75
             self.boy.face_dir = -1
-        elif self.boy.x <= 25:
-            self.boy.x = 25
+        elif self.boy.x <= 75:
+            self.boy.x = 75
             self.boy.face_dir = 1
 
     def draw(self):
         # 이동 방향은 boy.dir(키 입력 상태)이 아니라 face_dir 로 관리한다
+        # 1.5배(150x150)로 그리고, 발 위치가 그대로 유지되도록 그릴 때만 y 를 25 올린다
         if self.boy.face_dir == 1:
-            self.boy.image.clip_draw(self.boy.frame * 100, 100, 100, 100, self.boy.x, self.boy.y)
+            self.boy.image.clip_draw(self.boy.frame * 100, 100, 100, 100, self.boy.x, self.boy.y + 25, 150, 150)
         else:
-            self.boy.image.clip_draw(self.boy.frame * 100, 0, 100, 100, self.boy.x, self.boy.y)
+            self.boy.image.clip_draw(self.boy.frame * 100, 0, 100, 100, self.boy.x, self.boy.y + 25, 150, 150)
 
 
 class Boy:
