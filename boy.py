@@ -84,6 +84,7 @@ class AutoRun:
 
     def do(self):
         self.boy.frame = (self.boy.frame + 1) % 8
+        self.boy.x += self.boy.face_dir * 15   # RUN(5) 보다 3배 빠르게, 키 입력 없이 이동
 
     def draw(self):
         # 이동 방향은 boy.dir(키 입력 상태)이 아니라 face_dir 로 관리한다
