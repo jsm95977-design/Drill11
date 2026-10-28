@@ -1,4 +1,4 @@
-from pico2d import load_image, get_time, clamp, SDL_KEYDOWN, SDL_KEYUP, SDLK_SPACE, SDLK_LEFT, SDLK_RIGHT
+from pico2d import load_image, get_time, clamp, SDL_KEYDOWN, SDL_KEYUP, SDLK_SPACE, SDLK_LEFT, SDLK_RIGHT, SDLK_a
 from transitions import Machine, State
 
 
@@ -116,12 +116,15 @@ class Boy:
         self.machine.add_transition('arrow_down', 'idle', 'run')      # IDLE 에서 방향키 누름 -> RUN
         self.machine.add_transition('arrow_down', 'sleep', 'run')     # SLEEP 에서 방향키 누름 -> RUN
         self.machine.add_transition('arrow_up', 'run', 'idle')        # RUN 에서 방향키 뗌 -> IDLE
+        self.machine.add_transition('a_down', 'idle', 'autorun')      # IDLE 에서 A 키 -> AUTORUN
 
         self.states[self.state].enter()   # 초기 상태는 전이 없이 시작하므로 직접 enter 호출
 
     def handle_event(self, event):
         if event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
             self.space_down()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_a:
+            self.a_down()
         elif event.type in (SDL_KEYDOWN, SDL_KEYUP) and event.key in (SDLK_LEFT, SDLK_RIGHT):
             pressed = event.type == SDL_KEYDOWN
             if event.key == SDLK_RIGHT:
