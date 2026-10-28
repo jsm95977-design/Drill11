@@ -78,6 +78,7 @@ class AutoRun:
 
     def enter(self):
         self.boy.frame = 0
+        self.boy.auto_run_start_time = get_time()   # AUTORUN 에 들어올 때마다 5초 타이머 시작
 
     def exit(self):
         pass
@@ -93,6 +94,9 @@ class AutoRun:
         elif self.boy.x <= 75:
             self.boy.x = 75
             self.boy.face_dir = 1
+
+        if get_time() - self.boy.auto_run_start_time > 5:
+            self.boy.auto_time_out()
 
     def draw(self):
         # 이동 방향은 boy.dir(키 입력 상태)이 아니라 face_dir 로 관리한다
@@ -131,6 +135,7 @@ class Boy:
         self.machine.add_transition('arrow_down', 'sleep', 'run')     # SLEEP 에서 방향키 누름 -> RUN
         self.machine.add_transition('arrow_up', 'run', 'idle')        # RUN 에서 방향키 뗌 -> IDLE
         self.machine.add_transition('a_down', 'idle', 'autorun')      # IDLE 에서 A 키 -> AUTORUN
+        self.machine.add_transition('auto_time_out', 'autorun', 'idle')  # AUTORUN 5초 경과 -> IDLE
 
         self.states[self.state].enter()   # 초기 상태는 전이 없이 시작하므로 직접 enter 호출
 
