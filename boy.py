@@ -86,6 +86,14 @@ class AutoRun:
         self.boy.frame = (self.boy.frame + 1) % 8
         self.boy.x += self.boy.face_dir * 15   # RUN(5) 보다 3배 빠르게, 키 입력 없이 이동
 
+        # 화면 끝에 닿으면 경계 안으로 되돌리고 방향을 뒤집는다
+        if self.boy.x >= 800 - 25:
+            self.boy.x = 800 - 25
+            self.boy.face_dir = -1
+        elif self.boy.x <= 25:
+            self.boy.x = 25
+            self.boy.face_dir = 1
+
     def draw(self):
         # 이동 방향은 boy.dir(키 입력 상태)이 아니라 face_dir 로 관리한다
         if self.boy.face_dir == 1:
