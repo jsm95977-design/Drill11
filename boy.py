@@ -72,6 +72,23 @@ class Run:
             self.boy.image.clip_draw(self.boy.frame * 100, 0, 100, 100, self.boy.x, self.boy.y)
 
 
+class AutoRun:
+    def __init__(self, boy):
+        self.boy = boy
+
+    def enter(self):
+        pass
+
+    def exit(self):
+        pass
+
+    def do(self):
+        pass
+
+    def draw(self):
+        pass
+
+
 class Boy:
     def __init__(self):
         self.x, self.y = 400, 90
@@ -84,12 +101,14 @@ class Boy:
         self.IDLE = Idle(self)
         self.SLEEP = Sleep(self)
         self.RUN = Run(self)
-        self.states = {'idle': self.IDLE, 'sleep': self.SLEEP, 'run': self.RUN}
+        self.AUTO_RUN = AutoRun(self)
+        self.states = {'idle': self.IDLE, 'sleep': self.SLEEP, 'run': self.RUN, 'autorun': self.AUTO_RUN}
 
         states = [
             State('idle', on_enter=self.IDLE.enter, on_exit=self.IDLE.exit),
             State('sleep', on_enter=self.SLEEP.enter, on_exit=self.SLEEP.exit),
             State('run', on_enter=self.RUN.enter, on_exit=self.RUN.exit),
+            State('autorun', on_enter=self.AUTO_RUN.enter, on_exit=self.AUTO_RUN.exit),
         ]
         self.machine = Machine(model=self, states=states, initial='idle', ignore_invalid_triggers=True)
         self.machine.add_transition('time_out', 'idle', 'sleep')      # IDLE 5초 경과 -> SLEEP
