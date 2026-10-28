@@ -133,6 +133,7 @@ class Boy:
         self.machine.add_transition('space_down', 'sleep', 'idle')    # SLEEP 에서 SPACE -> IDLE
         self.machine.add_transition('arrow_down', 'idle', 'run')      # IDLE 에서 방향키 누름 -> RUN
         self.machine.add_transition('arrow_down', 'sleep', 'run')     # SLEEP 에서 방향키 누름 -> RUN
+        self.machine.add_transition('arrow_down', 'autorun', 'run')   # AUTORUN 에서 방향키 누름 -> RUN
         self.machine.add_transition('arrow_up', 'run', 'idle')        # RUN 에서 방향키 뗌 -> IDLE
         self.machine.add_transition('a_down', 'idle', 'autorun')      # IDLE 에서 A 키 -> AUTORUN
         self.machine.add_transition('auto_time_out', 'autorun', 'idle')  # AUTORUN 5초 경과 -> IDLE
